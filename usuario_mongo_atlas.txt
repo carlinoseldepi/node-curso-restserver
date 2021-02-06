@@ -1,0 +1,6 @@
+user: admin
+pass: admin.pass
+
+
+MONGODB URL
+mongodb+srv://admin:admin.pass@cluster0.xvp2d.mongodb.net/cafe
