@@ -70,7 +70,7 @@ app.post('/usuario', [verificaToken, verificaAdmin], (req, res) => {
     });
 });
 
-app.put('/usuario/:id', verificaToken, (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaAdmin], (req, res) => {
     let id = req.params.id;
     // la función pick devuelve un objeto con los campos que se le indiquen en el array
     let body = _.pick(req.body, ['nombre', 'img', 'role', 'estado']);
@@ -91,7 +91,7 @@ app.put('/usuario/:id', verificaToken, (req, res) => {
     });
 });
 
-app.delete('/usuario/:id', verificaToken, (req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin], (req, res) => {
     let id = req.params.id;
 
     /*
