@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(require('./routes/usuario'));
+// configuracion global de rutas
+app.use(require('./routes/index'));
 
 //cloud => mongodb+srv://admin:admin.pass@cluster0.xvp2d.mongodb.net/cafe
 //local => mongodb://localhost:27017/cafe
@@ -26,3 +27,11 @@ mongoose.connect(process.env.URL_DB, { useNewUrlParser: true, userCreateIndex: t
 app.listen(process.env.PORT, () => {
     console.log(`Escuachando en el puerto 3000`);
 });
+
+/*
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+};
+*/

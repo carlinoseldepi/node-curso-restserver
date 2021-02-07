@@ -5,14 +5,15 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
+const { verificaToken, verificaAdmin } = require('../middleware/auth');
 
-app.get('/usuario/:id', function(req, res) {
+app.get('/usuario/:id', verificaToken, (req, res) => {
     res.json('get usuario LOCAL');
 });
 
 
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', verificaToken, (req, res) => {
     let conditions = { estado: true }
     let desde = Number(req.query.desde) || 0;
     let limite = Number(req.query.limite) || 5;
@@ -42,7 +43,7 @@ app.get('/usuario', function(req, res) {
         })
 });
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificaAdmin], (req, res) => {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -69,7 +70,7 @@ app.post('/usuario', function(req, res) {
     });
 });
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', verificaToken, (req, res) => {
     let id = req.params.id;
     // la función pick devuelve un objeto con los campos que se le indiquen en el array
     let body = _.pick(req.body, ['nombre', 'img', 'role', 'estado']);
@@ -90,7 +91,7 @@ app.put('/usuario/:id', function(req, res) {
     });
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', verificaToken, (req, res) => {
     let id = req.params.id;
 
     /*
